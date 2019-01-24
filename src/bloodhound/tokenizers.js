@@ -10,9 +10,11 @@ var tokenizers = (function() {
   return {
     nonword: nonword,
     whitespace: whitespace,
+    skipzero: skipzero,
     obj: {
       nonword: getObjTokenizer(nonword),
-      whitespace: getObjTokenizer(whitespace)
+      whitespace: getObjTokenizer(whitespace),
+      skipzero: getObjTokenizer(skipzero)
     }
   };
 
@@ -24,6 +26,12 @@ var tokenizers = (function() {
   function nonword(str) {
     str = _.toStr(str);
     return str ? str.split(/\W+/) : [];
+  }
+
+  function skipzero(str){
+      str = _.toStr(str);
+      str = str.replace(/0/g, '');
+      return str ? str.split(/\W+/) : [];
   }
 
   function getObjTokenizer(tokenizer) {
